@@ -16,10 +16,10 @@ namespace BaseDatos
         public DateTime FechaFin { get; set; }
         public string Link { get; set; }
         public string Organizacion { get; set; }
-        public string CodigoPostal { get; set; }
+        public int Postal { get; set; }
         public string Direccion { get; set; }
-        public string Latitud { get; set; }
-        public string Longitud { get; set; }
+        public Decimal Latitud { get; set; }
+        public Decimal Longitud { get; set; }
 
         public List<Inscripcion> Inscripcion { get; } = new List<Inscripcion>();
         
@@ -31,8 +31,8 @@ namespace BaseDatos
             $"FechaFin: {FechaFin} \n" + 
             $"Link: {Link} \n" + 
             $"Organizacion: {Organizacion} \n" + 
+            $"CodigoPostal: {Postal} \n" + 
             $"Direccion: {Direccion} \n" + 
-            $"CodigoPostal: {CodigoPostal} \n" + 
             $"Latitud: {Latitud} \n" + 
             $"Longitud: {Longitud} \n";
     }

@@ -28,6 +28,10 @@ namespace HTTPClient
 
                 while (max == -1 || counter < max)
                 {
+                    // Inicializar
+                    Eventos.Clear();
+
+                    // Proceso
                     await Run();
 
                     counter++;
@@ -51,22 +55,15 @@ namespace HTTPClient
                 WriteLine("Get de actividades");
                 await GetActividades();
 
-                // Get eventos deportivos
-                WriteLine("Get de eventos deportivos");
-                await GetDeportivos();
-
-                if (TablaVacia()) // Si la tabla esta vacia, rellenamos
+                // Introducir/actualizar datos en la tabla eventos
+                WriteLine("Introducir/actualizar datos en la tabla eventos");
+                foreach (var item in Eventos)
                 {
-                    foreach (var item in Eventos)
-                    {
-                        RellenarTabla(item);
-                    }
-                } else { // Si la tabla no esta vacia, actualizamos
-                    foreach (var item in Eventos)
-                    {
-                        ActualizarTabla(item);
-                    }
+                    TablaEventos(item);
                 }
+
+                // Borrar los eventos que ya han sucedido
+                BorrarEventos();
             }
             catch (Exception e)
             {
@@ -84,26 +81,31 @@ namespace HTTPClient
                 HttpResponseMessage response = await client.GetAsync("https://datos.madrid.es/egob/catalogo/300107-0-agenda-actividades-eventos.json");
                 response.EnsureSuccessStatusCode();
                 var resp = await response.Content.ReadAsStringAsync();
-
                 dynamic json = NW.JsonConvert.DeserializeObject(resp);
 
                 foreach (var item in json["@graph"])
                 {
-                    var datos = new Evento {
-                        Id = Int32.Parse($"{item.id}"),
-                        Titulo = $"{item.title}",
-                        Descripcion = $"{item.description}",
-                        FechaInicio = DateTime.Parse($"{item.dtstart}"),
-                        FechaFin = DateTime.Parse($"{item.dtend}"),
-                        Link = $"{item.link}",
-                        Organizacion = $"{item["event-location"]}",
-                        CodigoPostal = $"{item.address.area["postal-code"]}",
-                        Direccion = $"{item.address.area["street-address"]}",
-                        Latitud = $"{item.location.latitude}",
-                        Longitud = $"{item.location.longitude}"
-                    };
+                    var FechaActual = DateTime.Today;
+                    var Resultado = DateTime.Compare(FechaActual, DateTime.Parse($"{item.dtend}"));
 
-                    Eventos.Add(datos);
+                    if (!($"{item["event-location"]}").Equals("") && Resultado < 0) 
+                    {
+                        var evento = new Evento {
+                            Id = Int32.Parse($"{item.id}"),
+                            Titulo = $"{item.title}",
+                            Descripcion = $"{item.description}",
+                            FechaInicio = DateTime.Parse($"{item.dtstart}"),
+                            FechaFin = DateTime.Parse($"{item.dtend}"),
+                            Link = $"{item.link}",
+                            Organizacion = $"{item["event-location"]}",
+                            Postal = Int32.Parse($"{item.address.area["postal-code"]}"),
+                            Direccion = $"{item.address.area["street-address"]}",
+                            Latitud = Decimal.Parse($"{item.location.latitude}"),
+                            Longitud = Decimal.Parse($"{item.location.longitude}")
+                        };
+
+                        Eventos.Add(evento);
+                    }
                 }
             }
             catch (Exception e)
@@ -112,69 +114,23 @@ namespace HTTPClient
             }
         }
 
-        // Get eventos deportivos
-        static async Task GetDeportivos()
+        // Rellenar/actualizar la tabla evento
+        static void TablaEventos(Evento evento)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync("https://datos.madrid.es/egob/catalogo/212504-0-agenda-actividades-deportes.json");
-                response.EnsureSuccessStatusCode();
-                var resp = await response.Content.ReadAsStringAsync();
-
-                dynamic json = NW.JsonConvert.DeserializeObject(resp);
-                
-                foreach (var item in json["@graph"])
+                using (var db = new EventosContext())
                 {
-                    if (item != null) {
-                        var datos = new Evento {
-                            Id = Int32.Parse($"{item.id}"),
-                            Titulo = $"{item.title}",
-                            Descripcion = $"{item.description}",
-                            FechaInicio = DateTime.Parse($"{item.dtstart}"),
-                            FechaFin = DateTime.Parse($"{item.dtend}"),
-                            Link = $"{item.link}",
-                            Organizacion = $"{item["event-location"]}",
-                            CodigoPostal = $"{item.address.area["postal-code"]}",
-                            Direccion = $"{item.address.area["street-address"]}",
-                            Latitud = $"{item.location.latitude}",
-                            Longitud = $"{item.location.longitude}"
-                        };
-
-                        Eventos.Add(datos);
+                    if(!ExisteEvento(evento))
+                    {
+                        Console.WriteLine($"Insertar evento: {evento.Id}");
+                        db.Evento.Add(evento);
+                        db.SaveChanges();
                     }
-                }
-            }
-            catch (Exception e)
-            {
-                WriteLine($"GetDeportivos: {e.Message}");
-            }
-        }
-
-        // Rellenar la tabla evento
-        static void RellenarTabla(Evento evento)
-        {
-            try
-            {
-                using (var db = new EventosContext())
-                {
-                    db.Evento.Add(evento);
-                    db.SaveChanges();
-                }
-            }
-            catch (System.Exception e)
-            {
-                WriteLine($"RellenarTabla {evento.Id}: {e.Message}");
-            }
-        }
-
-        // Actualizar los datos de la tabla evento
-        static void ActualizarTabla(Evento evento)
-        {
-            try
-            {
-                using (var db = new EventosContext())
-                {
-                    var query = db.Evento.Single(c => c.Id == evento.Id);
+                    else 
+                    {
+                        Console.WriteLine($"Actualizar evento: {evento.Id}");
+                        var query = db.Evento.Single(c => c.Id == evento.Id);
 
                         query.Id = evento.Id;
                         query.Titulo = evento.Titulo;
@@ -183,61 +139,56 @@ namespace HTTPClient
                         query.FechaFin = evento.FechaFin;
                         query.Link = evento.Link;
                         query.Organizacion = evento.Organizacion;
-                        query.CodigoPostal = evento.CodigoPostal;
+                        query.Postal = evento.Postal;
                         query.Direccion = evento.Direccion;
                         query.Latitud = evento.Latitud;
                         query.Longitud = evento.Longitud;
 
-                    db.SaveChanges();
-                }
-            }
-            catch (System.Exception e)
-            {
-                WriteLine($"ActualizarTabla {evento.Id}: {e.Message}");
-            }
-        }
-
-        // Actualizar tabla de eventos
-        static void BorrarEventosPasados()
-        {
-            try
-            {
-                using (var db = new EventosContext())
-                {
-                    var FechaActual = DateTime.Now;
-      
-                    foreach (var evento in db.Evento)
-                    {
-                        var FechaFin = evento.FechaFin;
-
-                        if(FechaFin < FechaActual) {
-                            Console.WriteLine($"{FechaFin} < {FechaActual}");
-                        }
+                        db.SaveChanges();
                     }
 
-                    db.SaveChanges();
                 }
             }
             catch (System.Exception e)
             {
-                WriteLine($"BorrarEventosPasados: {e.Message}");
+                WriteLine($"TablaEventos {evento.Id}: {e.Message}");
             }
         }
 
-        // Comprobar si la tabla tiene datos o no
-        static bool TablaVacia()
+        // Comprobar si la tabla tiene un evento concreto o no
+        static bool ExisteEvento(Evento evento)
         {
             try
             {
                 using (var db = new EventosContext())
                 {
-                    return db.Evento.Count() == 0;
+                    return db.Evento.Any(x => x.Id == evento.Id);;
                 }
             }
             catch (System.Exception e)
             {
-                WriteLine($"TablaVacia: {e.Message}");
-                return true;
+                WriteLine($"ExisteEvento: {e.Message}");
+                return false;
+            }
+        }
+
+        // Borrar los eventos que ya han sucecido
+        static void BorrarEventos()
+        {
+            try
+            {
+                using (var db = new EventosContext())
+                {
+                    var FechaActual = DateTime.Today;
+                    var eventosPasados = db.Evento.Where(x => x.FechaFin <= FechaActual).ToList();
+                    db.Evento.RemoveRange(eventosPasados);
+
+                    db.SaveChanges();
+                }
+            }
+            catch (System.Exception e)
+            {
+                WriteLine($"BorrarEventos: {e.Message}");
             }
         }
     }
