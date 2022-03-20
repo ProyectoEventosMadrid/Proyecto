@@ -8,7 +8,6 @@ namespace BaseDatos
     {
         public DbSet<Evento> Evento { get; set; }
         public DbSet<Inscripcion> Inscripcion { get; set; }
-        public DbSet<User> User { get; set; }
         public DbSet<Miembro> Miembro { get; set; }
 
         public string connString { get; private set; }
@@ -24,11 +23,6 @@ namespace BaseDatos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(m => new
-            {
-                m.MiembroId
-            }).IsUnique();
-
             modelBuilder.Entity<Inscripcion>().HasIndex(m => new
             {
                 m.MiembroId,
