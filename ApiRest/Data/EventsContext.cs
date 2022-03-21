@@ -3,14 +3,14 @@ using BaseDatos;
 
 namespace ApiRest.Data
 {
-    public class EventosContext : DbContext
+    public class EventsContext : DbContext
     {
-        public EventosContext(DbContextOptions<EventosContext> options)
+        public EventsContext(DbContextOptions<EventsContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Miembro> Miembro { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Inscripcion> Inscripcion { get; set; }
         public DbSet<Evento> Evento { get; set; }
     }

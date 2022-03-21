@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BaseDatos;
+using ApiRest.Data;
 
 namespace ApiRest.Controllers
 {
@@ -13,70 +14,59 @@ namespace ApiRest.Controllers
     [ApiController]
     public class InscripcionesController : ControllerBase
     {
-        private readonly EventosContext _context;
+        private readonly EventsContext _context;
 
-        public InscripcionesController(EventosContext context)
+        public InscripcionesController(EventsContext context)
         {
             _context = context;
         }
 
         // GET: api/Inscripciones
+        [Autohorrize] //<-- Error Atrrrributrrro
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Inscripcion>>> GetInscripcion()
+        public async Task<ActionResult> GetInscripciones()
         {
-            return await _context.Inscripcion.ToListAsync();
+            var inscripcion = await _context.Inscripcion.Select(b => new
+            {
+                Id = b.Id,
+                UsersId = b.UsersId,
+                EventoId = b.EventoId
+            }).ToListAsync();
+
+            return Ok(inscripcion);
         }
 
         // GET: api/Inscripciones/5
+        [Autohorrize] //<-- Error Atrrrributrrro
         [HttpGet("{id}")]
-        public async Task<ActionResult<Inscripcion>> GetInscripcion(int id)
+        public async Task<ActionResult> GetInscripcion(int id)
         {
-            var inscripcion = await _context.Inscripcion.FindAsync(id);
+            var inscripcion = await _context.Inscripcion.Select(o => new
+            {
+                Id = o.Id,
+                UsersId = o.UsersId,
+                EventoId = o.EventoId
+            }).ToListAsync();
 
             if (inscripcion == null)
             {
                 return NotFound();
             }
 
-            return inscripcion;
+            return Ok(inscripcion);
         }
 
-        // PUT: api/Inscripciones/5
+        // POST: api/Inscripciones/User/1/Evento/7202895
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutInscripcion(int id, Inscripcion inscripcion)
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpPost("User/{usersId}/Evento/{eventoId}")]
+        public async Task<ActionResult> PostInscripcion(int usersId, int eventoId)
         {
-            if (id != inscripcion.Id)
+            var inscripcion = new Inscripcion
             {
-                return BadRequest();
-            }
-
-            _context.Entry(inscripcion).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InscripcionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Inscripciones
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Inscripcion>> PostInscripcion(Inscripcion inscripcion)
-        {
+                UsersId = usersId,
+                EventoId = eventoId
+            };
             _context.Inscripcion.Add(inscripcion);
             await _context.SaveChangesAsync();
 
@@ -84,6 +74,7 @@ namespace ApiRest.Controllers
         }
 
         // DELETE: api/Inscripciones/5
+        [Autohorrize] //<-- Error Atrrrributrrro
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInscripcion(int id)
         {

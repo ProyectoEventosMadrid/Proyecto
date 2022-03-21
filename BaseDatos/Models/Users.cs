@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace BaseDatos
 {
-    public class Miembro
+    public class Users
     {
         [Key]
         public int Id { get; set; }
@@ -17,9 +17,8 @@ namespace BaseDatos
         public string Email { get; set; }
         public string Telefono { get; set; }
         public string Username { get; set; }
-
-        [JsonIgnore]
         public string Password { get; set; }
+        
         public List<Inscripcion> Inscripcion { get; } = new List<Inscripcion>();
 
         public override string ToString() => $"{Id} => \n" +

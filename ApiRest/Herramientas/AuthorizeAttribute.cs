@@ -10,8 +10,8 @@ public class AutohorrizeAttribute : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var miembro = (Miembro)context.HttpContext.Items["Miembro"];
-        if (miembro == null)
+        var user = (Users)context.HttpContext.Items["User"];
+        if (user == null)
         {
             // no logeado
             context.Result = new JsonResult(

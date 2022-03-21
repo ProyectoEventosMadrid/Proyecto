@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using BaseDatos;
 
 namespace ApiRest.Auth
 {
@@ -15,13 +14,9 @@ namespace ApiRest.Auth
     public class AuthResponse
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
         public string Username { get; set; }
         public string Token { get; set; }
         public System.DateTime ValidTo { get; set; }
-
-
 
         // public AuthenticateResponse(User user, string token, System.DateTime validTo)
         // {

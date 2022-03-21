@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BaseDatos;
+using ApiRest.Data;
 
 namespace ApiRest.Controllers
 {
@@ -13,109 +14,131 @@ namespace ApiRest.Controllers
     [ApiController]
     public class EventosController : ControllerBase
     {
-        private readonly EventosContext _context;
+        private readonly EventsContext _context;
 
-        public EventosController(EventosContext context)
+        public EventosController(EventsContext context)
         {
             _context = context;
         }
 
         // GET: api/Eventos
+        [Autohorrize] //<-- Error Atrrrributrrro
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Evento>>> GetEvento()
+        public async Task<ActionResult> GetEvento()
         {
-            return await _context.Evento.ToListAsync();
+            var evento = await _context.Evento.Select(b => new
+            {
+                Id = b.Id,
+                Titulo = b.Titulo,
+                Descripcion = b.Descripcion,
+                FechaInicio = b.FechaInicio,
+                FechaFin = b.FechaFin,
+                Link = b.Link,
+                Organizacion = b.Organizacion,
+                Postal = b.Postal,
+                Direccion = b.Direccion,
+                Latitud = b.Latitud,
+                Longitud = b.Longitud
+            }).ToListAsync();
+
+            return Ok(evento);
         }
 
-        // GET: api/Eventos/5
+        // GET: api/Eventos/7644875
+        [Autohorrize] //<-- Error Atrrrributrrro
         [HttpGet("{id}")]
-        public async Task<ActionResult<Evento>> GetEvento(int id)
+        public async Task<ActionResult> GetEvento(int id)
         {
-            var evento = await _context.Evento.FindAsync(id);
+            var evento = await _context.Evento.Where(o => o.Id == id).Select(b => new
+            {
+                Id = b.Id,
+                Titulo = b.Titulo,
+                Descripcion = b.Descripcion,
+                FechaInicio = b.FechaInicio,
+                FechaFin = b.FechaFin,
+                Link = b.Link,
+                Organizacion = b.Organizacion,
+                Postal = b.Postal,
+                Direccion = b.Direccion,
+                Latitud = b.Latitud,
+                Longitud = b.Longitud
+            }).ToListAsync();
 
             if (evento == null)
             {
                 return NotFound();
             }
 
-            return evento;
+            return Ok(evento);
         }
 
-        // PUT: api/Eventos/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvento(int id, Evento evento)
+        // GET: api/Eventos/Centros
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("/Centros")]
+        public async Task<ActionResult> GetCentros()
         {
-            if (id != evento.Id)
+            var evento = await _context.Evento.GroupBy(o => o.Organizacion).Select(g => new
             {
-                return BadRequest();
-            }
+                Organizacion = g.Key,
+            }).ToListAsync();
 
-            _context.Entry(evento).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(evento);
         }
 
-        // POST: api/Eventos
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Evento>> PostEvento(Evento evento)
+        // GET: api/Eventos/Centros/Centro Cultural Nicolás Salmerón (Chamartín)
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("/Centros/{centro}")]
+        public async Task<ActionResult> GetCentros(string centro)
         {
-            _context.Evento.Add(evento);
-            try
+            var evento = await _context.Evento.Where(l => l.Organizacion == centro).Select(b => new
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (EventoExists(evento.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                Id = b.Id,
+                Titulo = b.Titulo,
+                Descripcion = b.Descripcion,
+                FechaInicio = b.FechaInicio,
+                FechaFin = b.FechaFin,
+                Link = b.Link,
+                Organizacion = b.Organizacion,
+                Postal = b.Postal,
+                Direccion = b.Direccion,
+                Latitud = b.Latitud,
+                Longitud = b.Longitud
+            }).ToListAsync();
 
-            return CreatedAtAction("GetEvento", new { id = evento.Id }, evento);
-        }
-
-        // DELETE: api/Eventos/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvento(int id)
-        {
-            var evento = await _context.Evento.FindAsync(id);
             if (evento == null)
             {
                 return NotFound();
             }
 
-            _context.Evento.Remove(evento);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(evento);
         }
 
-        private bool EventoExists(int id)
+        // GET: api/Eventos/FechaInicio/2022-03-21
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("/FechaInicio/{fInicio}")]
+        public async Task<ActionResult> GetFechaInicio(DateTime fInicio)
         {
-            return _context.Evento.Any(e => e.Id == id);
+            var evento = await _context.Evento.Where(l => l.FechaInicio == fInicio).Select(b => new
+            {
+                Id = b.Id,
+                Titulo = b.Titulo,
+                Descripcion = b.Descripcion,
+                FechaInicio = b.FechaInicio,
+                FechaFin = b.FechaFin,
+                Link = b.Link,
+                Organizacion = b.Organizacion,
+                Postal = b.Postal,
+                Direccion = b.Direccion,
+                Latitud = b.Latitud,
+                Longitud = b.Longitud
+            }).ToListAsync();
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(evento);
         }
     }
 }

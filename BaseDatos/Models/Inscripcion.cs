@@ -10,12 +10,12 @@ namespace BaseDatos
     {
         [Key]
         public int Id { get; set; }
-        public int MiembroId { get; set; }
+        public int UsersId { get; set; }
         public int EventoId { get; set; }
 
-        public Miembro Miembro { get; set; }
+        public Users Users { get; set; }
         public Evento Evento { get; set; }
 
-        public override string ToString() => $"{MiembroId}x{EventoId}";
+        public override string ToString() => $"{UsersId}x{EventoId}";
     }
 }

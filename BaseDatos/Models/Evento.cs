@@ -18,8 +18,8 @@ namespace BaseDatos
         public string Organizacion { get; set; }
         public int Postal { get; set; }
         public string Direccion { get; set; }
-        public Decimal Latitud { get; set; }
-        public Decimal Longitud { get; set; }
+        public float Latitud { get; set; }
+        public float Longitud { get; set; }
 
         public List<Inscripcion> Inscripcion { get; } = new List<Inscripcion>();
         

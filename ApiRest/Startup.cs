@@ -37,7 +37,7 @@ namespace ApiRest
             services.AddCors();
             services.AddControllers();
 
-            services.AddDbContext<EventosContext>(opt =>
+            services.AddDbContext<EventsContext>(opt =>
                                                opt.UseSqlServer(connString));
 
             // configure strongly typed settings object

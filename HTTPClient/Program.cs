@@ -63,6 +63,7 @@ namespace HTTPClient
                 }
 
                 // Borrar los eventos que ya han sucedido
+                WriteLine("Borrar eventos pasados");
                 BorrarEventos();
             }
             catch (Exception e)
@@ -100,8 +101,8 @@ namespace HTTPClient
                             Organizacion = $"{item["event-location"]}",
                             Postal = Int32.Parse($"{item.address.area["postal-code"]}"),
                             Direccion = $"{item.address.area["street-address"]}",
-                            Latitud = Decimal.Parse($"{item.location.latitude}"),
-                            Longitud = Decimal.Parse($"{item.location.longitude}")
+                            Latitud = float.Parse($"{item.location.latitude}"),
+                            Longitud = float.Parse($"{item.location.longitude}")
                         };
 
                         Eventos.Add(evento);
