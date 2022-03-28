@@ -1,34 +1,22 @@
-// Añadir evento de click al button de login
-document.getElementById('btnLogin').addEventListener('click', (ev) => {
-    ev.preventDefault();
+$(document).ready(function () {
+    // Login
+    // -> Inicializar
+    $('#link-signup').css('opacity', '0.7');
+    $('#signup').hide();
 
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+    // -> Boton de click en Sign Up
+    $('#link-signup').on('click', function () {
+        $('#link-signup').css('opacity', '1');
+        $('#link-login').css('opacity', '0.7');
+        $('#signup').show();
+        $('#login').hide();
+    })
 
-    ObtenerDatos(username, password);
-})
-
-// Funciones
-function ObtenerDatos(username, password) {
-    // Obtener el acceso a traves de la api 
-    $.ajax({
-        type: "POST",
-        dataType: "html",
-        url: `http://10.10.17.196:5000/api/Users/authenticate/username/${username}/password/${password}`,
-        headers: {
-            "accept": "application/json",
-        },
-        success: function (response) { // Si el usuario existe
-            var aSession = { "Sesion": true, "User": username }; // Crear estructura del localStorage
-            localStorage.Session = JSON.stringify(aSession);
-
-            window.location.href = "./index.html";
-        },
-        error: function (response, status) { // Si el usuario no existe
-            alert("Usuario o contraseña incorrecta");
-
-            var aSession = { "Sesion": false, "User": "" }; // Crear estructura del localStorage
-            localStorage.Session = JSON.stringify(aSession); // Guardar los cambios en el localStorage
-        }
-    });
-}
+    // -> Boton de click en Log-in
+    $('#link-login').on('click', function () {
+        $('#link-login').css('opacity', '1');
+        $('#link-signup').css('opacity', '0.7');
+        $('#login').show();
+        $('#signup').hide();
+    })
+});

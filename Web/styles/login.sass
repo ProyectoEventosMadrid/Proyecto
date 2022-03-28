@@ -1,76 +1,95 @@
-// Import
+// Importaciones
 
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@700;800&display=swap')
 
 // General
 
-*
+* 
     margin: 0
-    font-family: 'PT Sans', sans-serif
 
 body
-    background-color: #1995AD !important
-    display: flex
-    min-height: 100vh
     width: 100%
-    align-items: center
+    min-height: 100vh
+    color: black
+    font-family: 'Karla', sans-serif !important
+    background-color: #DDA288 !important
+// Login 
+
+main 
+    display: flex
     justify-content: center
-    padding: 0 1rem
+    align-items: center
+    min-height: 100vh
 
-// Formulario
+    #carta-login
+        width: 800px
+        height: 500px
+        background-color: white
+        
+        .row
+            & > *
+                padding-left: 0 !important
 
-.container
-    background-color: #F1F1F2
-    width: fit-content !important
-    border-radius: 19px
-    padding: 2rem 4rem !important
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.048)
-
-    form
-        display: flex
-        justify-content: center
-        flex-direction: column
-        align-items: center
-
-        // Contenido 
-
+        #img-intro
+            background-image: url('https://www.easyjet.com/ejcms/cache/medialibrary/Images/JSS/Destinations/Hero/Spain_Madrid_3840x2160.jpg?mw=1920&hash=E8335D1B8641F2150C395A3EC48BA45CC0B5BA6D')
+            background-position: center center
+            background-size: cover
+        
         h1
-            margin-bottom: 2rem
-            text-align: center
+            width: 100%
+            display: flex
+            justify-content: space-evenly
+            font-size: 24px
+            padding: 1.5rem 0
+            cursor: pointer
+            color: #7E675E
 
-        input
-            padding: 1rem
-            border-radius: 15px
-            border: none
-            background-color: #BCBABE
-            outline: none
-            width: 95%
-            margin: 1rem 1rem 15px 1rem
-            font-size: 15px
+            a
 
-        // Autocompletar
+                &:hover
+                    opacity: 1 !important
+                    color: #5A4E4D
 
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        textarea:-webkit-autofill,
-        textarea:-webkit-autofill:hover,
-        textarea:-webkit-autofill:focus,
-        select:-webkit-autofill,
-        select:-webkit-autofill:hover,
-        select:-webkit-autofill:focus
-            -webkit-text-fill-color: black
-            -webkit-box-shadow: 0 0 0px 1000px #BCBABE inset
-            transition: background-color 5000s ease-in-out 0s
+        #form-login
+            
+            #inputs-login
+                margin: 5rem 1rem 0 1rem !important
 
-        // Boton 
+        #form-signup
 
-        button
-            padding: 1rem
-            border-radius: 15px
-            border: none
-            background-color: #1995AD
-            color: white
-            font-size: 20px
-            width: 60%
-            margin: 50px 0 20px 0
+            #inputs-signup
+                margin: 2rem 1rem 0 1rem !important
+                
+        form
+            height: calc(500px - 4.5rem)
+
+            div
+                height: calc(100% - 3rem)
+
+                fieldset
+                    margin: 0.8rem 0
+
+                    div
+                        display: flex
+                        justify-content: space-between
+                        background-color: #7E675E
+                        color: white
+                        width: 100%
+                        
+
+                        label
+                            width: 25%
+                            padding: 0.5rem 0.8rem
+
+                        input 
+                            width: 70%
+
+            input[type="submit"]
+                    color: white
+                    background-color: #7E675E
+                    border: 0
+                    padding: 1.5rem 0rem 
+
+@media only screen and (min-width: 624px)
+
+    
