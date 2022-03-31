@@ -1,10 +1,9 @@
 $(document).ready(function () {
-    // Login
-    // -> Inicializar
+    // Inicializar
     $('#link-signup').css('opacity', '0.7');
     $('#signup').hide();
 
-    // -> Boton de click en Sign Up
+    // Boton de click en Sign Up
     $('#link-signup').on('click', function () {
         $('#link-signup').css('opacity', '1');
         $('#link-login').css('opacity', '0.7');
@@ -12,7 +11,7 @@ $(document).ready(function () {
         $('#login').hide();
     })
 
-    // -> Boton de click en Log-in
+    // Boton de click en Log-in
     $('#link-login').on('click', function () {
         $('#link-login').css('opacity', '1');
         $('#link-signup').css('opacity', '0.7');

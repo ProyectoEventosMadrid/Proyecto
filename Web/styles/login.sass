@@ -8,7 +8,7 @@
     margin: 0
 
 body
-    width: 100vw
+    width: 100%
     min-height: 100vh
     color: black
     font-family: 'Karla', sans-serif !important
@@ -24,18 +24,21 @@ main
 
     #carta-login
         width: 800px
-        height: 500px
+        height: fit-content
         background-color: white
         
         .row
             & > *
                 padding-left: 0 !important
 
+            .col-md
+                padding-right: 0 !important
+
         #img-intro
             background-image: url('https://www.easyjet.com/ejcms/cache/medialibrary/Images/JSS/Destinations/Hero/Spain_Madrid_3840x2160.jpg?mw=1920&hash=E8335D1B8641F2150C395A3EC48BA45CC0B5BA6D')
             background-position: center center
             background-size: cover
-            height: 100%
+            height: 500px !important
         
         h1
             width: 100%
@@ -55,7 +58,7 @@ main
         #form-login
             
             #inputs-login
-                margin: 5rem 1rem 0 1rem !important
+                margin: 7rem 1rem 0 1rem !important
 
         #form-signup
 
@@ -87,11 +90,25 @@ main
                             width: 70%
 
             input[type="submit"]
-                    color: white
-                    background-color: #7E675E
-                    border: 0
-                    padding: 1.5rem 0rem 
+                color: white
+                background-color: #7E675E
+                border: 0
+                padding: 1.5rem 0rem 
 
-@media (max-width: 900px)
-    // Login 
+// Responsive
 
+@media (max-width: 767px)
+    main 
+        margin: 2rem 0 !important
+
+        #carta-login
+            width: 100%
+            min-height: 100vh
+
+            #img-intro
+                height: 150px !important
+            
+
+@media (max-width: 575px)
+    main    
+        margin: 0 0 !important
