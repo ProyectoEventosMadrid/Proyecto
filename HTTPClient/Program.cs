@@ -106,6 +106,9 @@ namespace HTTPClient
                         };
 
                         Eventos.Add(evento);
+                    } 
+                    else if (!($"{item["event-location"]}").Equals("") && Resultado < 0 && ($"{item["event-description"]}").Equals("")) {
+
                     }
                 }
             }

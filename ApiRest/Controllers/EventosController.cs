@@ -74,7 +74,7 @@ namespace ApiRest.Controllers
 
         // GET: api/Eventos/Centros
         [Autohorrize] //<-- Error Atrrrributrrro
-        [HttpGet("/Centros")]
+        [HttpGet("Centros")]
         public async Task<ActionResult> GetCentros()
         {
             var evento = await _context.Evento.GroupBy(o => o.Organizacion).Select(g => new
@@ -87,7 +87,7 @@ namespace ApiRest.Controllers
 
         // GET: api/Eventos/Centros/Centro Cultural Nicolás Salmerón (Chamartín)
         [Autohorrize] //<-- Error Atrrrributrrro
-        [HttpGet("/Centros/{centro}")]
+        [HttpGet("Centros/{centro}")]
         public async Task<ActionResult> GetCentros(string centro)
         {
             var evento = await _context.Evento.Where(l => l.Organizacion == centro).Select(b => new
@@ -113,12 +113,43 @@ namespace ApiRest.Controllers
             return Ok(evento);
         }
 
+        // GET: api/Eventos/Centros/Centro Cultural Nicolás Salmerón (Chamartín)/FechaInicio/2022-03-21
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("Centros/{centro}/FechaInicio/{fInicio}")]
+        public async Task<ActionResult> GetCentrosFechas(string centro, DateTime fInicio)
+        {
+            DateTime fFinInicio = fInicio.AddDays(1);
+
+            var evento = await _context.Evento.Where(l => l.Organizacion == centro && l.FechaInicio <= fFinInicio && l.FechaInicio >= fInicio).Select(b => new
+            {
+                Id = b.Id,
+                Titulo = b.Titulo,
+                Descripcion = b.Descripcion,
+                FechaInicio = b.FechaInicio,
+                FechaFin = b.FechaFin,
+                Link = b.Link,
+                Organizacion = b.Organizacion,
+                Postal = b.Postal,
+                Direccion = b.Direccion,
+                Latitud = b.Latitud,
+                Longitud = b.Longitud
+            }).ToListAsync();
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(evento);
+        }
+
         // GET: api/Eventos/FechaInicio/2022-03-21
         [Autohorrize] //<-- Error Atrrrributrrro
-        [HttpGet("/FechaInicio/{fInicio}")]
+        [HttpGet("FechaInicio/{fInicio}")]
         public async Task<ActionResult> GetFechaInicio(DateTime fInicio)
         {
-            var evento = await _context.Evento.Where(l => l.FechaInicio == fInicio).Select(b => new
+            DateTime fFinInicio = fInicio.AddDays(1);
+            var evento = await _context.Evento.Where(l => l.FechaInicio <= fFinInicio && l.FechaInicio >= fInicio).Select(b => new
             {
                 Id = b.Id,
                 Titulo = b.Titulo,

@@ -3,6 +3,10 @@
 * 
   margin: 0
 
+.btn
+  background-color:  #5A4E4D !important
+  color: white !important
+
 // Barra de navegacion
 
 .navbar
@@ -25,8 +29,6 @@
     padding: 0.5rem 18px
     line-height: 1.75
     text-transform: uppercase
-    background-color: #5A4E4D !important
-    color: white !important
 
 .navbar-transparent .navbar-brand
   color: #FFFFFF
@@ -38,7 +40,7 @@
 
 // Filtro de busqueda
 
-#filter-search
+#filter-container
   background-image: url('https://www.easyjet.com/ejcms/cache/medialibrary/Images/JSS/Destinations/Hero/Spain_Madrid_3840x2160.jpg?mw=1920&hash=E8335D1B8641F2150C395A3EC48BA45CC0B5BA6D')
   background-position: center center
   background-size: cover
@@ -48,7 +50,71 @@
   justify-content: center
   color: #FFFFFF
 
+  #filter
+    margin: 0 2.5rem
+    border-radius: 2rem 
+    background-color: white
+    padding: 1.5rem 3rem
+    flex-wrap: wrap
+    justify-content: space-between
+
+    #fecha
+      margin: 0 4rem
+
+    i
+      color: #DDA288
+      font-size: x-large
+
+    input 
+      border: none
+      font-size: x-large
+      margin-left: 1.5rem
+
+      &:focus
+        //outline: none
+
+      &::placeholder
+        opacity: 0.7
+        color: #5A4E4D
+
+    #btn-filter
+      border-radius: 1.5rem !important
+      font-size: x-large
+      padding: 0.8rem 2rem
+
+.ui-autocomplete
+  max-height: 100px
+  overflow-y: auto
+  overflow-x: hidden
+
+* html .ui-autocomplete 
+  height: 100px
+
 // Lista de eventos
 
 #list-events
-  height: 100rem
+  
+
+// Responsive
+@media (max-width: 1125px)
+    
+  // Filtro de busqueda 
+  #filter-container
+
+    #filter
+      flex-direction: column
+      justify-content: center
+
+      #fecha
+        margin: 2rem 0rem !important
+
+      i
+        font-size: medium
+        
+      input 
+        width: 100%
+        margin-left: 0.8rem
+        font-size: medium
+
+      #btn-filter
+        font-size: medium

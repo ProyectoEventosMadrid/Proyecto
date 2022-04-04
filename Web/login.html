@@ -38,38 +38,38 @@
                                 <fieldset>
                                     <div>
                                         <label for="nombre">Nombre</label>
-                                        <input id="nombre-signup" type="text" />
+                                        <input id="nombre-signup" type="text" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="apellido">Apellido</label>
-                                        <input id="apellido-signup" type="text" />
+                                        <input id="apellido-signup" type="text" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="email">Email</label>
-                                        <input id="email-signup" type="email" />
+                                        <input id="email-signup" type="email" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="telefono">Telefono</label>
                                         <input id="telefono-signup" type="text"
-                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="9" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="usuario">Usuario</label>
-                                        <input id="usuario-signup" type="text" />
+                                        <input id="usuario-signup" type="text" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="contraseña">Contraseña</label>
-                                        <input id="contraseña-signup" type="password" />
+                                        <input id="contraseña-signup" type="password" required />
                                     </div>
                                 </fieldset>
                             </div>
@@ -83,13 +83,13 @@
                                 <fieldset>
                                     <div>
                                         <label for="usuario">Usuario</label>
-                                        <input id="usuario-login" type="text" />
+                                        <input id="usuario-login" type="text" required />
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div>
                                         <label for="contraseña">Contraseña</label>
-                                        <input id="contraseña-login" type="password" />
+                                        <input id="contraseña-login" type="password" required />
                                     </div>
                                 </fieldset>
                             </div>
