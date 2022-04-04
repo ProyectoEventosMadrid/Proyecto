@@ -91,6 +91,14 @@ namespace HTTPClient
 
                     if (!($"{item["event-location"]}").Equals("") && Resultado < 0) 
                     {
+                        var CampoPostal = "";
+                        var CampoDireccion = "";
+
+                        if (item.address.area != null) {
+                            CampoPostal = $"{item.address.area["postal-code"]}";
+                            CampoDireccion = $"{item.address.area["street-address"]}";
+                        }
+
                         var evento = new Evento {
                             Id = Int32.Parse($"{item.id}"),
                             Titulo = $"{item.title}",
@@ -99,17 +107,14 @@ namespace HTTPClient
                             FechaFin = DateTime.Parse($"{item.dtend}"),
                             Link = $"{item.link}",
                             Organizacion = $"{item["event-location"]}",
-                            Postal = Int32.Parse($"{item.address.area["postal-code"]}"),
-                            Direccion = $"{item.address.area["street-address"]}",
+                            Postal = CampoPostal,
+                            Direccion = CampoDireccion,
                             Latitud = float.Parse($"{item.location.latitude}"),
                             Longitud = float.Parse($"{item.location.longitude}")
                         };
 
                         Eventos.Add(evento);
                     } 
-                    else if (!($"{item["event-location"]}").Equals("") && Resultado < 0 && ($"{item["event-description"]}").Equals("")) {
-
-                    }
                 }
             }
             catch (Exception e)

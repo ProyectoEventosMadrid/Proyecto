@@ -16,7 +16,7 @@ namespace BaseDatos
         public DateTime FechaFin { get; set; }
         public string Link { get; set; }
         public string Organizacion { get; set; }
-        public int Postal { get; set; }
+        public string Postal { get; set; }
         public string Direccion { get; set; }
         public float Latitud { get; set; }
         public float Longitud { get; set; }
