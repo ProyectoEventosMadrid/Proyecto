@@ -21,6 +21,7 @@ main
     justify-content: center
     align-items: center
     min-height: 100vh
+    padding: 2rem 0 
 
     #carta-login
         width: 800px
@@ -63,13 +64,13 @@ main
         #form-signup
 
             #inputs-signup
-                margin: 2rem 1rem 0 1rem !important
+                margin: 1.5rem 1rem 7rem 1rem !important
                 
         form
             height: calc(500px - 4.5rem)
 
             div
-                height: calc(100% - 3rem)
+                height: calc(55% - 3rem)
 
                 fieldset
                     margin: 0.8rem 0
@@ -80,7 +81,7 @@ main
                         background-color: #7E675E
                         color: white
                         width: 100%
-                        
+                        border-radius: 10px
 
                         label
                             width: 25%
@@ -88,26 +89,35 @@ main
 
                         input 
                             width: 70%
+                            border: 1px solid #7E675E
+                            border-radius: 0 10px 10px 0
+
+                            &:focus
+                                outline: none
 
             input[type="submit"]
                 color: white
                 background-color: #7E675E
                 border: 0
-                padding: 1.5rem 0rem 
-
+                border-radius: 15px
+                padding: 1.5rem 0rem
+                margin: auto
+                width: 80%
+                
 // Responsive
 @media (max-width: 767px)
     main 
-        margin: 2rem 0 !important
+        padding: 2rem 0 !important
 
         #carta-login
             width: 100%
-            min-height: 100vh
 
             #img-intro
-                height: 150px !important
-            
+                height: 150px !important   
 
 @media (max-width: 575px)
-    main    
-        margin: 0 0 !important
+    main 
+        padding: 0 0 !important
+
+        #carta-login
+            min-height: 100vh
