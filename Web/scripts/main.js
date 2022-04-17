@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+
 // Variables
 var bTransparent = true;
 
@@ -72,7 +74,7 @@ $(document).ready(function () {
     $("#fecha-filter").datepicker({ dateFormat: 'dd/mm/yy' });
     Inputmask().mask("fecha-filter");
 
-    // Añadir el autocomple al input de centros
+    // Añadir el autocomplete al input de centros
     $("#centros-filter").autocomplete({
         source: aCentros
     });
@@ -83,6 +85,29 @@ $(document).ready(function () {
         localStorage.Session = JSON.stringify(aSession); // Crear el localStorage.Session
 
         window.location.href = "./index.html"; // Recargar pagina
+    })
+
+    // Control click boton buscar
+    $('#btn-filter').on('click', function (ev) {
+        ev.preventDefault();
+
+        var aEventos = [];  
+        var sCentros = $('#centros-filter').val();
+        var sFecha = $('#fecha-filter').val();
+
+        var aFecha = sFecha.split('/');
+        var sFechaFormateada = `${aFecha[2]}-${aFecha[1]}-${aFecha[0]}`;
+
+        // Obtener array con los eventos
+        if (sCentros != "" && sFecha == "") { // Si solo esta rellenado el campo centros
+            aEventos = ObtenerEventosCentro(sCentros, sTokenAdmin);
+        } else if (sCentros == "" && sFecha != "") { // Si solo esta rellenado el campo fecha
+            aEventos = ObtenerEventosFecha(sFechaFormateada, sTokenAdmin);
+        } else if (sCentros != "" && sFecha != "") { // Si esta rellenado ambos campos
+            aEventos = ObtenerEventosFechaCentro(sFechaFormateada, sCentros, sTokenAdmin);
+        } else { // Si no esta rellenado ningun campo
+            aEventos = ObtenerEventos(100, sTokenAdmin);
+        }
     })
 });
 
@@ -119,3 +144,110 @@ function debounce(func, wait, immediate) {
         if (immediate && !timeout) func.apply(context, args);
     };
 };
+
+// Funciones del filtro de busqueda
+// Devuelven un array con los eventos que se desean obtener
+function ObtenerEventosFecha(sFecha, sTokenAdmin) {
+    let aEventos = [];
+
+    $.ajax({
+        type: "GET",
+        dataType: "html",
+        async: false,
+        url: `http://localhost:5000/api/Eventos/FechaInicio/${sFecha}`,
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + sTokenAdmin
+        },
+        success: function (response) {
+            let aRespuesta = JSON.parse(response);
+
+            aRespuesta.forEach(evento => {
+                aEventos.push(evento);
+            });
+        },
+        error: function (response) {
+            alert("Introduce una fecha valida.");
+        }
+    });
+
+    return aEventos;
+}
+
+function ObtenerEventosCentro(sCentro, sTokenAdmin) {
+    let aEventos = [];
+
+    $.ajax({
+        type: "GET",
+        dataType: "html",
+        async: false,
+        url: `http://localhost:5000/api/Eventos/Centros/${sCentro}`,
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + sTokenAdmin
+        },
+        success: function (response) {
+            let aRespuesta = JSON.parse(response);
+
+            aRespuesta.forEach(evento => {
+                aEventos.push(evento);
+            });
+        },
+        error: function (response) {
+            alert("Introduce un centro valida.");
+        }
+    });
+
+    return aEventos;
+}
+
+function ObtenerEventosFechaCentro(sFecha, sCentro, sTokenAdmin) {
+    let aEventos = [];
+
+    $.ajax({
+        type: "GET",
+        dataType: "html",
+        async: false,
+        url: `http://localhost:5000/api/Eventos/Centros/${sCentro}/FechaInicio/${sFecha}`,
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + sTokenAdmin
+        },
+        success: function (response) {
+            let aRespuesta = JSON.parse(response);
+
+            aRespuesta.forEach(evento => {
+                aEventos.push(evento);
+            });
+        },
+        error: function (response) {
+            alert("Introduce una fecha y/o centro validos.");
+        }
+    });
+
+    return aEventos;
+}
+
+function ObtenerEventos(nCantidad, sTokenAdmin) {
+    let aEventos = [];
+
+    $.ajax({
+        type: "GET",
+        dataType: "html",
+        async: false,
+        url: `http://localhost:5000/api/Eventos`,
+        headers: {
+            "accept": "application/json",
+            "Authorization": "Bearer " + sTokenAdmin
+        },
+        success: function (response) {
+            let aRespuesta = JSON.parse(response);
+
+            for (let index = 0; index < nCantidad; index++) {
+                aEventos.push(aRespuesta[index]);
+            }
+        }
+    });
+
+    return aEventos;
+}
