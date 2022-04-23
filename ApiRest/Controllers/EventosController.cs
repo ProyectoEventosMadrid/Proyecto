@@ -118,7 +118,8 @@ namespace ApiRest.Controllers
         [HttpGet("Centros/{centro}/FechaInicio/{fInicio}")]
         public async Task<ActionResult> GetCentrosFechas(string centro, DateTime fInicio)
         {
-            DateTime fFinInicio = fInicio.AddDays(1);
+            TimeSpan tTiempo = new TimeSpan(23, 59, 59);
+            DateTime fFinInicio = fInicio.Add(tTiempo);
 
             var evento = await _context.Evento.Where(l => l.Organizacion == centro && l.FechaInicio <= fFinInicio && l.FechaInicio >= fInicio).Select(b => new
             {
@@ -148,7 +149,9 @@ namespace ApiRest.Controllers
         [HttpGet("FechaInicio/{fInicio}")]
         public async Task<ActionResult> GetFechaInicio(DateTime fInicio)
         {
-            DateTime fFinInicio = fInicio.AddDays(1);
+            TimeSpan tTiempo = new TimeSpan(23, 59, 59);
+            DateTime fFinInicio = fInicio.Add(tTiempo);
+
             var evento = await _context.Evento.Where(l => l.FechaInicio <= fFinInicio && l.FechaInicio >= fInicio).Select(b => new
             {
                 Id = b.Id,

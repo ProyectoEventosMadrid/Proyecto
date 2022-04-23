@@ -97,7 +97,74 @@
 // Lista de eventos
 
 #list-events
-  height: 100vh
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+
+  .card
+    width: 300px
+    height: 300px 
+    padding: 1rem 1.5rem
+    margin: 2rem
+    background: #dda288 !important
+    color: white
+    border: 0 !important
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    text-align: justify
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    .card-intro 
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-bottom: 15px
+
+      .card-fecha
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        margin-right: 1rem
+        background: #7e675e
+        width: 60px
+        border-radius: 50%
+        padding: 0.5rem 0
+
+        p 
+          margin: 0 !important
+          font-size: small
+
+        .card-dia
+          font-size: large
+
+      .card-titulo
+        flex: 1
+        margin: 0 !important
+        color: #5A4E4D
+        
+    .card-descripcion
+      overflow: auto
+      padding-right: 10px
+      height: 252px
+
+      &::-webkit-scrollbar
+        width: 8px
+
+      &::-webkit-scrollbar-thumb
+        border-radius: 10px
+        background-color: #7e675e
+
+
+    .card-boton
+      margin: 1rem 0 0.2rem 0
+      text-align: right
+
+      a
+        text-decoration: none
+        color: #5A4E4D
+        
 
 // Responsive
 
