@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+
 // Variables
 var bTransparent = true;
 var aMeses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SET", "OCT", "NOV", "DIC"];
@@ -70,11 +72,11 @@ $(document).ready(function () {
     });
 
     // Añadir calendario al input de fecha
-    $("#fecha-filter").datepicker({ dateFormat: 'dd/mm/yy' });
+    $('#fecha-filter').datepicker({ dateFormat: 'dd/mm/yy' });
     Inputmask().mask("fecha-filter");
 
     // Añadir el autocomplete al input de centros
-    $("#centros-filter").autocomplete({
+    $('#centros-filter').autocomplete({
         source: aCentros
     });
 
@@ -133,12 +135,20 @@ $(document).ready(function () {
                 </div>
                 <div class="card-descripcion">${sDescripcion}</div>
                 <div class="card-boton">
-                    <a href="login.html">Ver más</a>
+                    <button class="btn-evento">Ver más</button>
                 </div>
             </div>`).appendTo("#list-events");
         });
 
         if (aEventos.length != 0) $("#list-events").css('padding', '5rem 0');
+
+        // Control click link carta
+        $('.btn-evento').on('click', function (ev) {
+            var sId = ev.originalEvent.path[2].className.substring(12); // Obtener el id de la clase del elemento principal
+            localStorage.Evento = JSON.stringify(sId);
+
+            window.location.href = "./evento.html"; // Redirigir a la pagina del evento
+        })
     })
 });
 
