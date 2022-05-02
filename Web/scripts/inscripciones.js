@@ -117,6 +117,7 @@ $(document).ready(function () {
                 aInscripcionUsuario = aRespuesta[0];
             }
         });
+        
         // Borrar la inscripcion del evento
         $.ajax({
             type: "DELETE",

@@ -113,15 +113,9 @@ $(document).ready(function () {
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
-            },
-            success: function (response) {
-                window.location.href = "./index.html"; // Recargar pagina
-            },
-            error: function (response, status) {
-                alert("Ya estas inscrito en este evento.");
-                console.log("Inscripcion no realizada");
             }
         });
-        
+
+        window.location.href = "./index.html"; // Recargar pagina
     })
 })
