@@ -19,7 +19,10 @@ body
   color: white !important
 
 // Barra de navegacion
+
 .navbar
+    transition: all 0.4s
+    -webkit-transition: all 0.4s
     background: #7E675E !important
     box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15)
 
@@ -31,16 +34,25 @@ body
         color: #DDA288
         text-transform: uppercase
 
-    #btn-salir
-        margin: 15px 3px
+    #btn-dropdown-cuenta
+        margin: 5px 3px
         font-size: 14px
         padding: 0.5rem 18px
         line-height: 1.75
         text-transform: uppercase
         letter-spacing: 2px
 
+    #btn-cuenta      
+        .dropdown-menu
+            margin: 0 0.8rem
+            min-width: 0 !important
+            border-radius: 10px
 
-// Login 
+        a
+            &:hover
+                background: #dda2888a !important
+
+// Evento 
 
 main 
     display: flex
@@ -108,7 +120,7 @@ main
 
 @media (max-width: 575px)
     main 
-        padding: 5.5rem 0 0 0
+        padding: 5.1rem 0 0 0
         margin: 0
 
         #carta-evento

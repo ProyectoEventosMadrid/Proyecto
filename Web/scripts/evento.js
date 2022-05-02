@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+
 $(document).ready(function () {
     // Obtener el Token del admin
     var sTokenAdmin = "";
@@ -88,7 +90,7 @@ $(document).ready(function () {
 
         <p id="link">Link: <a href="${aEvento.link}">Más información</a></p>
         
-        <button class="btn rounded-pill">Inscribirse</button>`).appendTo("#informacion");
+        <button class="btn rounded-pill" id="btn-inscribirse">Inscribirse</button>`).appendTo("#informacion");
 
     // Control click boton salir
     $('#btn-salir').on('click', function (ev) {
@@ -96,5 +98,30 @@ $(document).ready(function () {
         localStorage.Session = JSON.stringify(aSession); // Crear el localStorage.Session
 
         window.location.href = "./index.html"; // Recargar pagina
+    })
+
+    // Control click boton inscribirse
+    $('#btn-inscribirse').on('click', function (ev) {
+        let aSession = JSON.parse(localStorage.Session);
+        let sEvento = JSON.parse(localStorage.Evento);
+
+        $.ajax({
+            type: "POST",
+            dataType: "html",
+            async: false,
+            url: `http://localhost:5000/api/Inscripciones/User/${aSession.UserId}/Evento/${sEvento}`,
+            headers: {
+                "accept": "application/json",
+                "Authorization": "Bearer " + sTokenAdmin
+            },
+            success: function (response) {
+                window.location.href = "./index.html"; // Recargar pagina
+            },
+            error: function (response, status) {
+                alert("Ya estas inscrito en este evento.");
+                console.log("Inscripcion no realizada");
+            }
+        });
+        
     })
 })

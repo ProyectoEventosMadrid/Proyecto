@@ -13,7 +13,7 @@ $(document).ready(function () {
 
     // Obtener localStorage de sesion y si no existe, crearlo
     if (localStorage.Session == null) {
-        var aSession = { "Sesion": false, "User": "", "Token": "" }; // Crear estructura del localStorage.Session
+        var aSession = { "Sesion": false, "UserId": "", "Token": "" }; // Crear estructura del localStorage.Session
         localStorage.Session = JSON.stringify(aSession); // Crear el localStorage.Session
     } else {
         var aSession = JSON.parse(localStorage.Session); // Obtener en Array el localStorage.Session
@@ -26,11 +26,11 @@ $(document).ready(function () {
         $('#btn-filter').prop("disabled", false);
     }
 
-    // Control boton login/salir. Si hay alguien logeado mostrar solo el boton salir, sino mostrar solo el boton login
+    // Control boton login/cuenta. Si hay alguien logeado mostrar solo el boton cuenta, sino mostrar solo el boton login
     if (aSession["Sesion"]) {
         $('#btn-login').hide();
     } else {
-        $('#btn-salir').hide();
+        $('#btn-cuenta').hide();
     }
 
     // Obtener el Token del admin

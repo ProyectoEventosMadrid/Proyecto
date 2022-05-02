@@ -1,7 +1,17 @@
+// Importaciones
+
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@700;800&display=swap')
+  
 // General
 
 * 
   margin: 0
+
+body
+  width: 100%
+  min-height: 100vh
+  color: black
+  font-family: 'Karla', sans-serif !important
 
 .btn
   background-color:  #5A4E4D !important
@@ -23,13 +33,24 @@
     color: #DDA288
     text-transform: uppercase
 
-  #btn-login, #btn-salir
-    margin: 15px 3px
+  #btn-login, #btn-dropdown-cuenta
+    margin: 5px 3px
     font-size: 14px
     padding: 0.5rem 18px
     line-height: 1.75
     text-transform: uppercase
     letter-spacing: 2px
+
+  
+  #btn-cuenta      
+    .dropdown-menu
+      margin: 0 0.8rem
+      min-width: 0 !important
+      border-radius: 10px
+
+      a
+        &:hover
+          background: #dda2888a !important
 
 .navbar-transparent .navbar-brand
   color: #FFFFFF
@@ -42,7 +63,7 @@
 // Filtro de busqueda
 
 #filter-container
-  background-image: url('https://www.easyjet.com/ejcms/cache/medialibrary/Images/JSS/Destinations/Hero/Spain_Madrid_3840x2160.jpg?mw=1920&hash=E8335D1B8641F2150C395A3EC48BA45CC0B5BA6D')
+  background-image: url('../images/FondoMadrid.jpg')
   background-position: center center
   background-size: cover
   min-height: 100vh
@@ -164,7 +185,6 @@
         border: none
         background: transparent 
         color: #5A4E4D
-        
 
 // Responsive
 

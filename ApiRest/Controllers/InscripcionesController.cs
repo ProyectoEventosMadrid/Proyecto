@@ -41,7 +41,47 @@ namespace ApiRest.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetInscripcion(int id)
         {
-            var inscripcion = await _context.Inscripcion.Select(o => new
+            var inscripcion = await _context.Inscripcion.Where(o => o.Id == id).Select(o => new
+            {
+                Id = o.Id,
+                UsersId = o.UsersId,
+                EventoId = o.EventoId
+            }).ToListAsync();
+
+            if (inscripcion == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(inscripcion);
+        }
+
+        // GET: api/Inscripciones/UserId/5
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("UserId/{userId}")]
+        public async Task<ActionResult> GetInscripcionUser(int userId)
+        {
+            var inscripcion = await _context.Inscripcion.Where(o => o.UsersId == userId).Select(o => new
+            {
+                Id = o.Id,
+                UsersId = o.UsersId,
+                EventoId = o.EventoId
+            }).ToListAsync();
+
+            if (inscripcion == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(inscripcion);
+        }
+
+        // GET: api/Inscripciones/EventoId/5
+        [Autohorrize] //<-- Error Atrrrributrrro
+        [HttpGet("EventoId/{eventoId}")]
+        public async Task<ActionResult> GetInscripcionEvento(int eventoId)
+        {
+            var inscripcion = await _context.Inscripcion.Where(o => o.EventoId == eventoId).Select(o => new
             {
                 Id = o.Id,
                 UsersId = o.UsersId,

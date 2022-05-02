@@ -1,0 +1,148 @@
+// Importaciones
+
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@700;800&display=swap')
+
+// General
+
+body
+    width: 100%
+    color: black
+    font-family: 'Karla', sans-serif !important
+
+.btn
+  background-color:  #5A4E4D !important
+  color: white !important
+
+// Barra de navegacion
+
+.navbar
+    transition: all 0.4s
+    -webkit-transition: all 0.4s
+    background: #7E675E !important
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15)
+
+    .navbar-brand
+        font-weight: 600px
+        margin: 5px 0px
+        padding: 20px 15px
+        font-size: 16px
+        color: #DDA288
+        text-transform: uppercase
+
+    #btn-dropdown-cuenta
+        margin: 5px 3px
+        font-size: 14px
+        padding: 0.5rem 18px
+        line-height: 1.75
+        text-transform: uppercase
+        letter-spacing: 2px
+
+    #btn-cuenta
+        .dropdown-menu
+            margin: 0 0.8rem
+            min-width: 0 !important
+            border-radius: 10px
+
+        a
+            &:hover
+                background: #dda2888a !important
+
+// Informacion
+
+main
+    margin-top: 8rem
+
+    #intro-titulo
+        font-weight: bold
+        font-size: 1.625em
+        margin-bottom: 1.5em
+        padding-bottom: 0.6em
+        position: relative
+        text-align: center
+
+        &::before
+            background-color: #7E675E
+            margin: 0 auto
+            bottom: 0
+            content: ""
+            height: 2px
+            left: 0
+            position: absolute
+            right: 0
+            width: 80px
+            box-sizing: border-box
+
+// Cartas
+
+#list-inscripciones
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+  margin-top: 2rem
+
+  .card
+    width: 300px
+    height: 300px 
+    padding: 1rem 1.5rem
+    margin: 2rem
+    background: #dda288 !important
+    color: white
+    border: 0 !important
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+    text-align: justify
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    .card-intro 
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-bottom: 15px
+
+      .card-fecha
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        margin-right: 1rem
+        background: #7e675e
+        width: 60px
+        border-radius: 50%
+        padding: 0.5rem 0
+
+        p 
+          margin: 0 !important
+          font-size: small
+
+        .card-dia
+          font-size: large
+
+      .card-titulo
+        flex: 1
+        margin: 0 !important
+        color: #5A4E4D
+        
+    .card-descripcion
+      overflow: auto
+      padding-right: 10px
+      height: 252px
+
+      &::-webkit-scrollbar
+        width: 8px
+   
+      &::-webkit-scrollbar-thumb
+        border-radius: 10px
+        background-color: #7e675e
+
+    .card-boton
+      margin: 1rem 0 0.2rem 0
+      text-align: right
+      display: flex
+      justify-content: space-between
+
+      button
+        padding: 0
+        border: none
+        background: transparent 
+        color: #5A4E4D

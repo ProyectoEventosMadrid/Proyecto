@@ -27,7 +27,13 @@
             <div class="container">
                 <a class="navbar-brand float-left" href="./index.html">HappyEvents</a>
                 <a href="login.html" class="btn rounded-pill float-right" id="btn-login">Login</a>
-                <button class="btn rounded-pill float-right" id="btn-salir">Salir</button>
+                <div class="btn-group" id="btn-cuenta">
+                    <button class="btn btn-secondary dropdown-toggle rounded-pill" id="btn-dropdown-cuenta" data-bs-toggle="dropdown" aria-expanded="false">Mi cuenta</button>
+                    <ul class="dropdown-menu" aria-labelledby="btn-dropdown-cuenta">
+                      <li><a class="dropdown-item" id="btn-inscripciones" href="./inscripciones.html">Mis eventos</a></li>
+                      <li><a class="dropdown-item" id="btn-salir" href="#">Salir</a></li>                
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

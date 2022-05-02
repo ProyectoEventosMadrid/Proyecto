@@ -55,8 +55,8 @@ function ValidarUsuario(username, password) {
         },
         success: function (response) { // Si el usuario existe
             var aUsuario = JSON.parse(response);
-
-            var aSession = { "Sesion": true, "User": aUsuario.username, "Token": aUsuario.token }; // Crear estructura del localStorage
+            
+            var aSession = { "Sesion": true, "UserId": aUsuario.id, "Token": aUsuario.token }; // Crear estructura del localStorage
             localStorage.Session = JSON.stringify(aSession); // Crear/modificar el localStorage
 
             window.location.href = "./index.html"; // Redirigir al inicio
@@ -64,7 +64,7 @@ function ValidarUsuario(username, password) {
         error: function (response, status) { // Si el usuario no existe
             alert("Usuario o contraseña incorrecta");
 
-            var aSession = { "Sesion": false, "User": "", "Token": ""}; // Crear estructura del localStorage
+            var aSession = { "Sesion": false, "UserId": "", "Token": ""}; // Crear estructura del localStorage
             localStorage.Session = JSON.stringify(aSession); // Crear/modificar el localStorage
         }
     });
