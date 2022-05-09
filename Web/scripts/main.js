@@ -3,6 +3,7 @@ const { Alert } = require("bootstrap");
 // Variables
 var bTransparent = true;
 var aMeses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SET", "OCT", "NOV", "DIC"];
+var aEventosMostrado = [];
 
 // Proceso
 $(document).ready(function () {
@@ -118,6 +119,8 @@ $(document).ready(function () {
         $("#list-events").css('padding', '0');
 
         aEventos.forEach(evento => {
+            aEventosMostrado.push(evento.id); // Guardar ID del evento en un Array
+
             var sDescripcion = "Próximamente se dispondrá más información sobre este evento.";
             if (evento.descripcion != "") sDescripcion = evento.descripcion;
 
@@ -145,10 +148,73 @@ $(document).ready(function () {
         // Control click link carta
         $('.btn-evento').on('click', function (ev) {
             var sId = ev.originalEvent.path[2].className.substring(12); // Obtener el id de la clase del elemento principal
-            localStorage.Evento = JSON.stringify(sId);
+            localStorage.Evento = JSON.stringify(sId); // Guardar en un localStorage el evento que se hizo clic
+
+            localStorage.EventoMostrados = JSON.stringify(aEventosMostrado); // Crear el localStorage de los eventos que se muestran
 
             window.location.href = "./evento.html"; // Redirigir a la pagina del evento
         })
+    })
+
+    // Control del boton de retroceso del navegador
+    if (localStorage.EventoMostrados != null) {
+        var aEventosGuardados = JSON.parse(localStorage.EventoMostrados); // Obtener en Array el localStorage.EventoMostrados
+
+        aEventosGuardados.forEach(eventoId => {
+            // Obtenemos la informacion del evento en base a su ID
+            $.ajax({
+                type: "GET",
+                dataType: "html",
+                async: false,
+                url: `http://localhost:5000/api/Eventos/${eventoId}`,
+                headers: {
+                    "accept": "application/json",
+                    "Authorization": "Bearer " + sTokenAdmin
+                },
+                success: function (response) {
+                    var aRespuestaEvento = JSON.parse(response);
+                    var aEventoInformacion = aRespuestaEvento[0];
+
+                    aEventosMostrado.push(aEventoInformacion.id); // Guardar ID del evento en un Array
+
+                    // Crear las cartas de eventos y añadirlas a la lista de eventos
+                    var sDescripcion = "Próximamente se dispondrá más información sobre este evento.";
+                    if (aEventoInformacion.descripcion != "") sDescripcion = aEventoInformacion.descripcion;
+
+                    var dFecha = new Date(aEventoInformacion.fechaInicio);
+                    var sDia = `${dFecha.getDate()}`;
+                    if (sDia.length <= 1) sDia = `0${sDia}`;
+
+                    $(`<div class="card evento-${aEventoInformacion.id}">
+                        <div class="card-intro">
+                            <div class="card-fecha">
+                                <p class="card-dia">${sDia}</p>
+                                <p>${aMeses[dFecha.getMonth()]}</p>
+                            </div>
+                            <p class="card-titulo">${aEventoInformacion.titulo}</p>
+                        </div>
+                        <div class="card-descripcion">${sDescripcion}</div>
+                        <div class="card-boton">
+                            <button class="btn-evento">Ver más</button>
+                        </div>
+                    </div>`).appendTo("#list-events");
+                }
+            });
+        })
+
+        $("#list-events").css('padding', '5rem 0'); // Añadir espacio arriba y abajo
+
+        localStorage.EventoMostrados = JSON.stringify(""); // Vaciamos el localStorage de eventos mostrados
+    }
+
+    // Control click link carta
+    $('.btn-evento').on('click', function (ev) {
+        var sId = ev.originalEvent.path[2].className.substring(12); // Obtener el id de la clase del elemento principal
+        localStorage.Evento = JSON.stringify(sId); // Guardar en un localStorage el evento que se hizo clic
+
+        localStorage.EventoMostrados = JSON.stringify(aEventosMostrado); // Crear el localStorage de los eventos que se muestran
+
+        window.location.href = "./evento.html"; // Redirigir a la pagina del evento
     })
 });
 
@@ -301,7 +367,7 @@ function ObtenerEventos(nCantidad, sTokenAdmin) {
     let bEjecutando = false;
 
     if (!bEjecutando) {
-       $.ajax({
+        $.ajax({
             type: "GET",
             dataType: "html",
             url: `http://localhost:5000/api/Eventos`,
