@@ -8,7 +8,7 @@ $(document).ready(function () {
         type: "POST",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Users/authenticate/username/paulac/password/1234`,
+        url: `http://10.10.17.196:5000/api/Users/authenticate/username/paulac/password/1234`,
         headers: {
             "accept": "application/json",
         },
@@ -26,7 +26,7 @@ $(document).ready(function () {
         type: "GET",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Inscripciones/UserId/${aSession.UserId}`,
+        url: `http://10.10.17.196:5000/api/Inscripciones/UserId/${aSession.UserId}`,
         headers: {
             "accept": "application/json",
             "Authorization": "Bearer " + sTokenAdmin
@@ -44,7 +44,7 @@ $(document).ready(function () {
             type: "GET",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Eventos/${inscripcion.eventoId}`,
+            url: `http://10.10.17.196:5000/api/Eventos/${inscripcion.eventoId}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
@@ -107,7 +107,7 @@ $(document).ready(function () {
             type: "GET",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Inscripciones/EventoId/${sId}`,
+            url: `http://10.10.17.196:5000/api/Inscripciones/EventoId/${sId}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
@@ -123,7 +123,7 @@ $(document).ready(function () {
             type: "DELETE",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Inscripciones/${aInscripcionUsuario.id}`,
+            url: `http://10.10.17.196:5000/api/Inscripciones/${aInscripcionUsuario.id}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin

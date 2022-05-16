@@ -8,7 +8,7 @@ $(document).ready(function () {
         type: "POST",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Users/authenticate/username/paulac/password/1234`,
+        url: `http://10.10.17.196:5000/api/Users/authenticate/username/paulac/password/1234`,
         headers: {
             "accept": "application/json",
         },
@@ -26,7 +26,7 @@ $(document).ready(function () {
         type: "GET",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Eventos/${sId}`,
+        url: `http://10.10.17.196:5000/api/Eventos/${sId}`,
         headers: {
             "accept": "application/json",
             "Authorization": "Bearer " + sTokenAdmin
@@ -109,7 +109,7 @@ $(document).ready(function () {
             type: "POST",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Inscripciones/User/${aSession.UserId}/Evento/${sEvento}`,
+            url: `http://10.10.17.196:5000/api/Inscripciones/User/${aSession.UserId}/Evento/${sEvento}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin

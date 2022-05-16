@@ -41,7 +41,7 @@ $(document).ready(function () {
         type: "POST",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Users/authenticate/username/paulac/password/1234`,
+        url: `http://10.10.17.196:5000/api/Users/authenticate/username/paulac/password/1234`,
         headers: {
             "accept": "application/json",
         },
@@ -58,7 +58,7 @@ $(document).ready(function () {
         type: "GET",
         dataType: "html",
         async: false,
-        url: `http://localhost:5000/api/Eventos/Centros`,
+        url: `http://10.10.17.196:5000/api/Eventos/Centros`,
         headers: {
             "accept": "application/json",
             "Authorization": "Bearer " + sTokenAdmin
@@ -166,7 +166,7 @@ $(document).ready(function () {
                 type: "GET",
                 dataType: "html",
                 async: false,
-                url: `http://localhost:5000/api/Eventos/${eventoId}`,
+                url: `http://10.10.17.196:5000/api/Eventos/${eventoId}`,
                 headers: {
                     "accept": "application/json",
                     "Authorization": "Bearer " + sTokenAdmin
@@ -263,7 +263,7 @@ function ObtenerEventosFecha(sFecha, sTokenAdmin) {
             type: "GET",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Eventos/FechaInicio/${sFecha}`,
+            url: `http://10.10.17.196:5000/api/Eventos/FechaInicio/${sFecha}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
@@ -299,7 +299,7 @@ function ObtenerEventosCentro(sCentro, sTokenAdmin) {
             type: "GET",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Eventos/Centros/${sCentro}`,
+            url: `http://10.10.17.196:5000/api/Eventos/Centros/${sCentro}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
@@ -335,7 +335,7 @@ function ObtenerEventosFechaCentro(sFecha, sCentro, sTokenAdmin) {
             type: "GET",
             dataType: "html",
             async: false,
-            url: `http://localhost:5000/api/Eventos/Centros/${sCentro}/FechaInicio/${sFecha}`,
+            url: `http://10.10.17.196:5000/api/Eventos/Centros/${sCentro}/FechaInicio/${sFecha}`,
             headers: {
                 "accept": "application/json",
                 "Authorization": "Bearer " + sTokenAdmin
@@ -370,7 +370,7 @@ function ObtenerEventos(nCantidad, sTokenAdmin) {
         $.ajax({
             type: "GET",
             dataType: "html",
-            url: `http://localhost:5000/api/Eventos`,
+            url: `http://10.10.17.196:5000/api/Eventos`,
             async: false,
             headers: {
                 "accept": "application/json",

@@ -49,7 +49,7 @@ function ValidarUsuario(username, password) {
     $.ajax({
         type: "POST",
         dataType: "html",
-        url: `http://localhost:5000/api/Users/authenticate/username/${username}/password/${password}`,
+        url: `http://10.10.17.196:5000/api/Users/authenticate/username/${username}/password/${password}`,
         headers: {
             "accept": "application/json",
         },
@@ -77,7 +77,7 @@ function CrearUsuario(nombre, apellido, email, telefono, usuario, contraseña) {
     $.ajax({
         type: "POST",
         dataType: "html",
-        url: `http://localhost:5000/api/Users/Nombre/${nombre}/Apellido/${apellido}/Role/${role}/Email/${email}/Telefono/${telefono}/Username/${usuario}/Password/${contraseña}`,
+        url: `http://10.10.17.196:5000/api/Users/Nombre/${nombre}/Apellido/${apellido}/Role/${role}/Email/${email}/Telefono/${telefono}/Username/${usuario}/Password/${contraseña}`,
         headers: {
             "accept": "application/json",
         },
