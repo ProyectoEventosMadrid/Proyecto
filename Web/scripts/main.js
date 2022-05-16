@@ -6,7 +6,7 @@ var aMeses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SET", "OC
 var aEventosMostrado = [];
 
 // Proceso
-$(document).ready(function () {
+$(document).ready(function () { 
     // Cambiar transparencia de la barra de navegacion
     if ($('.navbar[color-on-scroll]').length != 0) {
         $(window).on('scroll', fNavbar.checkScrollForTransparentNavbar)
@@ -93,6 +93,7 @@ $(document).ready(function () {
     $('#btn-filter').on('click', function (ev) {
         ev.preventDefault();
 
+        aEventosMostrado = []; // Limpiamos la lista de eventos que mostramos
         var aEventos = [];
         var sCentros = $('#centros-filter').val();
         var sFecha = $('#fecha-filter').val();
@@ -157,8 +158,10 @@ $(document).ready(function () {
     })
 
     // Control del boton de retroceso del navegador
-    if (localStorage.EventoMostrados != null) {
-        var aEventosGuardados = JSON.parse(localStorage.EventoMostrados); // Obtener en Array el localStorage.EventoMostrados
+    var aEventosGuardados = JSON.parse(localStorage.EventoMostrados); // Obtener en Array el localStorage.EventoMostrados
+
+    if (localStorage.EventoMostrados != null || !aEventosGuardados.Equals("")) {
+        aEventosMostrado = []; // Limpiamos la lista de eventos mostrados
 
         aEventosGuardados.forEach(eventoId => {
             // Obtenemos la informacion del evento en base a su ID
@@ -205,6 +208,7 @@ $(document).ready(function () {
         $("#list-events").css('padding', '5rem 0'); // Añadir espacio arriba y abajo
 
         localStorage.EventoMostrados = JSON.stringify(""); // Vaciamos el localStorage de eventos mostrados
+
     }
 
     // Control click link carta
